@@ -1,2 +1,3 @@
 curl https://api.thingspeak.com/channels/1569165/feeds.json?results=2 | json_pp
 data = json.dumps(response.json(), indent=4, sort_keys=True) --> print data in json FORMATTING
+print(response.json()["feeds"][0]["field1"]) --> print json list
