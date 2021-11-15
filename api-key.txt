@@ -1,0 +1,1 @@
+curl https://api.thingspeak.com/channels/1569165/feeds.json?results=2 | json_pp
