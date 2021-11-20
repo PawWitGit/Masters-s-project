@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/26598738/how-to-create-user-database-in-script-for-docker-postgres
+https://medium.com/@mattvonrohr/installing-postgresql-12-on-raspbian-buster-using-docker-51032c0a0cdf
+create table air_pollution(id integer primary key generated always as identity, PM1 text, PM2.5 text, PM10 text, temp text, pressure text, humidity text

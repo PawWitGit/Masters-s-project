@@ -17,5 +17,4 @@ obj1 = Response(
     ).json()
 )
 
-
 obj1.print_data()

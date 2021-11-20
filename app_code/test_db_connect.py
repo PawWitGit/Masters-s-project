@@ -5,10 +5,10 @@ def postgres_test():
     try:
         conn = psycopg2.connect(
             """
-            dbname='exampledb' 
-            user='pi' 
+            dbname='measuring' 
+            user='postgres' 
             host='localhost' 
-            password='_admin1' 
+            password='_dataadmin1' 
             connect_timeout=1 
             
             """
@@ -17,6 +17,7 @@ def postgres_test():
         conn.close()
         print("OK")
         return True
+    
 
     except:
         print('NOOK')

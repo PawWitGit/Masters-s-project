@@ -1,0 +1,1 @@
+docker run --name data_server -d --restart unless-stopped -p 5432:5432 -e POSTGRES_PASSWORD=_dataadmin1 -v ${PWD}/data:/var/lib/postgresql/data postgres:13.5
