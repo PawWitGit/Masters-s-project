@@ -1,5 +1,6 @@
 import psycopg2
 
+
 def postgres_test():
 
     try:
@@ -17,11 +18,10 @@ def postgres_test():
         conn.close()
         print("OK")
         return True
-    
 
     except:
-        print('NOOK')
+        print("NOOK")
         return False
-        
+
 
 postgres_test()
