@@ -26,7 +26,7 @@ class DbConnection:
 
         except:
             print("NOOK")
-            print(self.password)
+            
             return False
 
 
