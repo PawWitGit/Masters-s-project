@@ -12,7 +12,7 @@ class DbConnection:
         self.password = password
         self.db_port = db_port
 
-    def connection_to_db(self):
+    def check_db_connect(self):
 
         try:
             conn = psycopg2.connect(
@@ -35,4 +35,4 @@ class DbConnection:
 obj1 = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "5432")
 
 
-obj1.connection_to_db()
+obj1.check_db_connect()
