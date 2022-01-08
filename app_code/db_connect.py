@@ -1,5 +1,7 @@
 import psycopg2
-# create workspace on RPi 4B 
+
+# create workspace on RPi 4B
+
 
 class DbConnection:
     def __init__(self, dbname, user, host, password, db_port):
@@ -26,7 +28,7 @@ class DbConnection:
 
         except:
             print("NOOK")
-            
+
             return False
 
 
