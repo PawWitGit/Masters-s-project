@@ -1,8 +1,8 @@
 import requests
 import json
 
-class Response:
 
+class Response:
     def __init__(self, data):
         self.data = data
 

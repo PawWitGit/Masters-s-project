@@ -1,3 +1,4 @@
+from typing import NoReturn
 import requests
 import json
 
@@ -28,6 +29,9 @@ class Response:
 
     def get_response_data(self) -> None:
 
+        """In this function get response response from sensor api
+        and assign them to programm variables"""
+
         self.pm1 = self.response_data["feeds"][0]["field1"]
         self.pm2_5 = self.response_data["feeds"][0]["field2"]
         self.pm10 = self.response_data["feeds"][0]["field3"]
@@ -49,3 +53,5 @@ class Response:
         ]
 
         return self.db_array
+
+    
