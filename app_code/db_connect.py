@@ -104,4 +104,4 @@ db_connect = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "
 while True:
 
     db_connect.insert_values_to_db()
-    time.sleep(5)
+    time.sleep(60)
