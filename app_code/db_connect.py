@@ -1,3 +1,5 @@
+import json
+from typing import NoReturn
 import psycopg2
 import requests
 import time
@@ -7,7 +9,7 @@ from api_response import Response
 
 
 class DbConnection:
-    def __init__(self, dbname, user, host, password, db_port, response):
+    def __init__(self, dbname, user, host, password, db_port):
 
         self.dbname = dbname
         self.user = user
@@ -17,6 +19,9 @@ class DbConnection:
         self.response = Response(
             requests.get(
                 "https://api.thingspeak.com/channels/1569165/feeds.json?results=2"
+            ).json(),
+            requests.get(
+                "http://api.weatherapi.com/v1/current.json?key=6135b0d4cfec4f9c8eb195114210305&q=Katowice&aqi=no"
             ).json(),
             0,
             0,
@@ -31,6 +36,7 @@ class DbConnection:
     def check_db_connect(self):
 
         self.response.get_response_data()
+        print(self.response.time + ":")
 
         try:
             conn = psycopg2.connect(
@@ -41,19 +47,21 @@ class DbConnection:
             )
 
             conn.close()
-            print("OK")
-            print(self.response.pm1)
+            print("DB connection OK\n")
 
             return True
 
         except:
-            print("NOOK")
+            print("DB connection ERROR\n")
 
             return False
 
     def insert_values_to_db(self):
 
+        """Get values from sensor and insert it`s to DB"""
+
         self.response.get_response_data()
+        print(self.response.time + ":")
 
         try:
             conn = psycopg2.connect(
@@ -62,9 +70,9 @@ class DbConnection:
                 host=self.host,
                 password=self.password,
             )
-
+            print("DB connection OK")
         except:
-            print("ERROR")
+            print("DB connection ERROR")
 
         cursor = conn.cursor()
         psql_insert_query = """ INSERT INTO measuring_data (data, pm1, pm2_5, pm10, temperature, pressure, humidity) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
@@ -80,13 +88,20 @@ class DbConnection:
 
         cursor.execute(psql_insert_query, psql_insert_values)
         conn.commit()
-        print("Archive OK")
+        print("Archive OK\n")
         conn.close()
 
+        return True
 
-obj1 = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "5432", "")
-obj1.check_db_connect()
+    def db_archieve_data(self) -> None:
+
+        while True:
+            self.insert_values_to_db()
+            time.sleep(5)
+
+
+db_connect = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "5432")
 while True:
 
-    obj1.insert_values_to_db()
-    time.sleep(60.0)
+    db_connect.insert_values_to_db()
+    time.sleep(5)

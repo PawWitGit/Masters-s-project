@@ -7,6 +7,7 @@ class Response:
     def __init__(
         self,
         response_data,
+        response_temp,
         time,
         pm1,
         pm2_5,
@@ -18,6 +19,7 @@ class Response:
     ):
 
         self.response_data = response_data
+        self.response_temp = response_temp
         self.time = time
         self.pm1 = pm1
         self.pm2_5 = pm2_5
@@ -32,14 +34,20 @@ class Response:
         """In this function get response response from sensor api
         and assign them to programm variables"""
 
+        self.response_data = requests.get(
+            "https://api.thingspeak.com/channels/1569165/feeds.json?results=2"
+        ).json()
+        self.response_time = requests.get(
+            "http://api.weatherapi.com/v1/current.json?key=6135b0d4cfec4f9c8eb195114210305&q=Katowice&aqi=no"
+        ).json()
+
         self.pm1 = self.response_data["feeds"][0]["field1"]
         self.pm2_5 = self.response_data["feeds"][0]["field2"]
         self.pm10 = self.response_data["feeds"][0]["field3"]
-        self.temperature = self.response_data["feeds"][0]["field4"]
+        self.temperature = self.response_temp["current"]["temp_c"]
         self.pressure = self.response_data["feeds"][0]["field5"]
         self.humidity = self.response_data["feeds"][0]["field6"]
         self.time = self.response_data["feeds"][0]["created_at"]
-        print("Pm2.5", self.pm2_5, "\n", self.time)
 
     def crate_array_to_database(self):
 
