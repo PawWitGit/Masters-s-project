@@ -39,6 +39,7 @@ class Response:
         self.pressure = self.response_data["feeds"][0]["field5"]
         self.humidity = self.response_data["feeds"][0]["field6"]
         self.time = self.response_data["feeds"][0]["created_at"]
+        print("Pm2.5", self.pm2_5, "\n", self.time)
 
     def crate_array_to_database(self):
 
@@ -53,5 +54,3 @@ class Response:
         ]
 
         return self.db_array
-
-    
