@@ -4,5 +4,5 @@ The project is going to be objective prediction of air_pollution and research on
 The project will help me develop python(AI/ML, data sciencie) skills.
 
 # Data in DB
-![image](https://user-images.githubusercontent.com/81580465/148702404-6e03b788-7ce7-476e-9812-032647f81463.png)
+![obraz](https://user-images.githubusercontent.com/81580465/148745243-91dba709-d226-4bbf-bbb3-1abf27aa7783.png)
 
