@@ -4,5 +4,6 @@ The project is going to be objective prediction of air_pollution and research on
 The project will help me develop python(AI/ML, data sciencie) skills.
 
 # Data in DB
+The Data server works on Raspberry Pi 4 in docker container.
 ![obraz](https://user-images.githubusercontent.com/81580465/148745243-91dba709-d226-4bbf-bbb3-1abf27aa7783.png)
 
