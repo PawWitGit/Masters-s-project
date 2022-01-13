@@ -38,16 +38,16 @@ class Response:
             "https://api.thingspeak.com/channels/1569165/feeds.json?results=2"
         ).json()
         self.response_time = requests.get(
-            "http://api.weatherapi.com/v1/current.json?key=6135b0d4cfec4f9c8eb195114210305&q=Katowice&aqi=no"
+            "http://worldtimeapi.org/api/timezone/Europe/Warsaw"
         ).json()
 
         self.pm1 = self.response_data["feeds"][0]["field1"]
         self.pm2_5 = self.response_data["feeds"][0]["field2"]
         self.pm10 = self.response_data["feeds"][0]["field3"]
-        self.temperature = self.response_temp["current"]["temp_c"]
+        self.temperature = self.response_data["feeds"][0]["field4"]
         self.pressure = self.response_data["feeds"][0]["field5"]
         self.humidity = self.response_data["feeds"][0]["field6"]
-        self.time = self.response_data["feeds"][0]["created_at"]
+        self.time = self.response_time["datetime"]
 
     def crate_array_to_database(self):
 
