@@ -99,9 +99,12 @@ class DbConnection:
             self.insert_values_to_db()
             time.sleep(5)
 
+"""
+to run service on RPi app <----------->
 
-db_connect = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "5432")
-while True:
+ db_connect = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "5432")
+ while True:
 
-    db_connect.insert_values_to_db()
-    time.sleep(60)
+     db_connect.insert_values_to_db()
+     time.sleep(60)
+"""
