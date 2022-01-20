@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-app_code/postgres_docker_container/data
+app_code/docker_container/data
 .idea
