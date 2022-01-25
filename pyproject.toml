@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "masters_project"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = "GNU GENERAL PUBLIC LICENSE"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+psycopg2 = "^2.9.3"
+
+#PyQt5 = "^5.15.2"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+pyside = "^6.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
