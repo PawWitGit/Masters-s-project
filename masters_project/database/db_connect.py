@@ -51,7 +51,7 @@ class DbConnection:
 
             return True
 
-        except:
+        except Exception:
             print("DB connection ERROR\n")
 
             return False
@@ -100,8 +100,11 @@ class DbConnection:
             time.sleep(5)
 
 
-db_connect = DbConnection("measuring", "postgres", "localhost", "_dataadmin1", "5432")
-while True:
+db_connect = DbConnection(
+    "measuring", "postgres", "192.168.55.114", "_dataadmin1", "5432"
+)
+db_connect.check_db_connect()
+# while True:
 
-    db_connect.insert_values_to_db()
-    time.sleep(60)
+#     db_connect.insert_values_to_db()
+#     time.sleep(60)
