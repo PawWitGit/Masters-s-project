@@ -1,0 +1,17 @@
+ssome test job:
+    image: python3.9
+    script:
+        - python --version
+        - pip --version
+        - pip install pytest
+        - pytest --version
+        - echo "Doing complex stuff"
+
+build image:
+    image: docker
+    services: 
+        - docker:dind
+    script:
+        - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USERNAME $CI_REGISTRY --password-stdin
+        - docker build -t $CI_REGISTRY_IMAGE .
+        - docker push $CI_REGISTRY_IMAGE
