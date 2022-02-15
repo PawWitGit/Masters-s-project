@@ -1,50 +1,50 @@
-""" In this file, create a GUI to app"""
+from msilib.schema import LaunchCondition
+import sys
+from PySide6.QtCore import QRect,Qt
+from PySide6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QWidget,
+    QListWidget,
+    QPushButton,
+    QVBoxLayout,
+    QHBoxLayout,
+    QListWidgetItem,
+    
+    
+)
 
-from email.mime import image
-from enum import auto
-from logging import root
-from re import I
-import tkinter as tk
-from tkinter import mainloop, ttk
-from tkinter.tix import COLUMN
-from turtle import bgcolor, width
-from typing import Container
-from PIL import Image, ImageTk
-from tkinter import ttk
-from tkinter.filedialog import askopenfile
+class MainWindow(QLabel):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__()
 
+        MainWindow.setGeometry(self,300,300,700,520)
 
-class MainWindow(tk.Tk):
-    def __init__(self):
-        super().__init__()
+        item_list = ['PM1','PM2.5','PM10','Temperatura','Ciśnienie', 'Wilgotność']
+        menu_widget = QListWidget()
+        for i in range(len(item_list)):
+            item = QListWidgetItem(f"{item_list[i]}")
+            item.setTextAlignment(Qt.AlignCenter)
+            menu_widget.addItem(item)           
 
-        # configure the frame
-        self.geometry("600x600")
-        self.title("Air Pollution")
-        self.resizable(1, 1)
+        menu_widget.setGeometry(QRect(30,30,20,21))
 
-        # columns and rows setup
+        text_widget = QLabel("_placeholder")
+        button = QPushButton("Pobierz Dane z bazy danych")
+        button.show()
+        button.setGeometry(QRect(0,30,40,20))
 
-        self.create_widgets()
+        
+        
 
-    def create_widgets(self):
-        # username
-        username_label = ttk.Label(self, text="Username:", background="red")
-
-        # image
-        image1 = Image.open("air_poll.png")
-
-        test = ImageTk.PhotoImage(image1)
-        label1 = ttk.Label(image=test)
-        label1.image = test
-        label1.grid(row=1, column=0)
-
-
-""" Create connec to to control linux services
-	button1 - start
-	button2 - stop
-	button3 - reload"""
 
 if __name__ == "__main__":
-    root = MainWindow()
-    root.mainloop()
+    app = QApplication()
+    m = MainWindow()
+    m.show()
+
+    with open("main.qss", "r") as f:
+        _style = f.read()
+        app.setStyleSheet(_style)
+
+    sys.exit(app.exec())
