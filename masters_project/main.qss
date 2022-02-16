@@ -30,15 +30,15 @@ QLineEdit {
 }
 
 QPushButton {
-    background-color: #2ABf9E;
-    
-    font-size: 18px;
-    
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2ABf9E, stop: 1 #FFFFFF );
+    border-color: #2ABf9E;
+    border-style: outset;
+    border-width: 4px;
     border-radius: 10px;
-        
+    font-weight: bold;
 }
  
 QPushButton::pressed {
-    background-color: #3366ff;
+    background-color: lightgreen;
     border-style: inset;
 }
