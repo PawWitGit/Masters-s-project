@@ -17,6 +17,16 @@ QListWidget::item:selected {
 QLabel {
     background-color: #FFFFFF;
     qproperty-alignment: AlignCenter;
+    border: 1px solid #2ABf9E;
+    font-size: 18px;
+    font-weight: bold;
+}
+QLineEdit {
+    background-color: #FFFFFF;
+    qproperty-alignment: AlignCenter;
+    border: 1px solid #2ABf9E;
+    font-size: 12px;
+    font-weight: normal;
 }
 
 QPushButton {

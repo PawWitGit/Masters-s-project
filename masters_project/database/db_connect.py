@@ -3,19 +3,19 @@ from typing import NoReturn
 import psycopg2
 import requests
 import time
-from api_response import Response
+from database.response import Response
 
 # create workspace on RPi 4B
 
 
 class DbConnection:
-    def __init__(self, dbname, user, host, password, db_port):
-
-        self.dbname = dbname
-        self.user = user
-        self.host = host
-        self.password = password
-        self.db_port = db_port
+    def __init__(self):
+        # "measuring", "postgres", "192.168.55.114", "_dataadmin1", "5432"
+        self.dbname = 'measuring'
+        self.user = 'postgres'
+        self.host = '192.168.55.114'
+        self.password = '_dataadmin1'
+        self.db_port = '5432'
         self.response = Response(
             requests.get(
                 "https://api.thingspeak.com/channels/1569165/feeds.json?results=2"
@@ -100,11 +100,3 @@ class DbConnection:
             time.sleep(5)
 
 
-db_connect = DbConnection(
-    "measuring", "postgres", "192.168.55.114", "_dataadmin1", "5432"
-)
-db_connect.check_db_connect()
-# while True:
-
-#     db_connect.insert_values_to_db()
-#     time.sleep(60)
