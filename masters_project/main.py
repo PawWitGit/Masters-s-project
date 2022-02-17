@@ -2,8 +2,14 @@ from cProfile import label
 from calendar import calendar
 from msilib.schema import LaunchCondition
 import sys
+import datetime
+import time
+from xmlrpc.client import DateTime
+from pytest import console_main
+import requests
 from turtle import right
-from PySide6.QtCore import QRect, Qt, QTimer
+from PySide6.QtCharts import QCandlestickSet
+from PySide6.QtCore import QRect, Qt, QDateTime, QDate
 from PySide6.QtWidgets import (
     QApplication,
     QLabel,
@@ -16,6 +22,8 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QLineEdit,
     QCalendarWidget,
+    QDateEdit,
+    QDateTimeEdit,
 )
 
 from datetime import datetime
@@ -26,13 +34,26 @@ from database.db_connect import DbConnection
 class MainWindow(QLabel):
     def __init__(self, parent=None):
 
-        self.db_ip_adress = "192.168.55.115"
+        self.db_ip_adress = "192.168.55.111"
+        self.date_string = "wpisz godzinę w formacie hh:mm"
 
         super(MainWindow, self).__init__()
 
-        db_connection = DbConnection()
+        try:
+            db_connection = DbConnection()
+        except:
+            print("Network Fault")
+        MainWindow.setGeometry(self, 500, 300, 700, 700)
 
-        MainWindow.setGeometry(self, 300, 300, 700, 700)
+        def convert_data(data):
+
+            time_convert = data
+            day = data[0:1]
+            month = data[3:4]
+            year = data[6:9]
+
+            time_convert = day + ":" + month + ":" + year
+            return time_convert
 
         item_list = ["PM1", "PM2.5", "PM10", "Temperatura", "Ciśnienie", "Wilgotność"]
         menu_widget = QListWidget()
@@ -55,13 +76,13 @@ class MainWindow(QLabel):
         edit_label_1 = QLineEdit(f"{self.db_ip_adress}", self)
         edit_label_1.setGeometry(10, 22, 160, 20)
 
-        calendar_1 = QCalendarWidget(self)
-        calendar_1.setGridVisible(True)
-        calendar_1.setGeometry(10, 200, 200, 200)
+        input_time_1 = QDateTimeEdit(self)
+        input_time_1.setCalendarPopup(True)
+        input_time_1.setGeometry(10, 200, 300, 40)
 
-        calendar_2 = QCalendarWidget(self)
-        calendar_2.setGridVisible(True)
-        calendar_2.setGeometry(220, 200, 200, 200)
+        input_time_2 = QDateTimeEdit(self)
+        input_time_2.setCalendarPopup(True)
+        input_time_2.setGeometry(10, 260, 300, 40)
 
         button_1 = QPushButton("Odśwież połaczenie\n z bazą danych", self)
         button_1.clicked.connect(
@@ -70,19 +91,32 @@ class MainWindow(QLabel):
                 "Refresh Db conn",
                 edit_label_1.text(),
                 "\n",
-                calendar_1.selectedDate(),
             )
         )
+
+        # try:
+        #     strin = datetime.strptime(input_time_1, "%d/%m/%m")
+        # except:
+        #     pass
+
         button_1.setGeometry(10, 60, 230, 100)
 
+        button_2 = QPushButton("Pokaż dane historyczne", self)
+        button_2.clicked.connect(lambda: print(input_time_1.text(), type(input_time_1)))
+        button_2.setGeometry(440, 200, 230, 100)
 
-if __name__ == "__main__":
-    app = QApplication()
-    m = MainWindow()
-    m.show()
 
-    with open("main.qss", "r") as f:
-        _style = f.read()
-        app.setStyleSheet(_style)
+try:
+    if __name__ == "__main__":
+        app = QApplication()
+        m = MainWindow()
+        m.show()
 
-    sys.exit(app.exec())
+        with open("main.qss", "r") as f:
+            _style = f.read()
+            app.setStyleSheet(_style)
+
+        sys.exit(app.exec())
+
+except ValueError:
+    pass
