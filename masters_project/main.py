@@ -1,11 +1,13 @@
 from cProfile import label
 from calendar import calendar
 from msilib.schema import LaunchCondition
+from sqlite3 import Timestamp
 import sys
 import datetime
 import time
 from xmlrpc.client import DateTime
 from pytest import console_main
+from plot_data import DataView
 import requests
 from turtle import right
 from PySide6.QtCharts import QCandlestickSet
@@ -24,6 +26,7 @@ from PySide6.QtWidgets import (
     QCalendarWidget,
     QDateEdit,
     QDateTimeEdit,
+    QComboBox,
 )
 
 from datetime import datetime
@@ -94,15 +97,24 @@ class MainWindow(QLabel):
             )
         )
 
-        # try:
-        #     strin = datetime.strptime(input_time_1, "%d/%m/%m")
-        # except:
-        #     pass
+        str_input_time_1 = input_time_1.text()
+        str_input_time_2 = input_time_2.text()
 
         button_1.setGeometry(10, 60, 230, 100)
 
-        button_2 = QPushButton("Pokaż dane historyczne", self)
-        button_2.clicked.connect(lambda: print(input_time_1.text(), type(input_time_1)))
+        combox_1 = QComboBox(self)
+        combox_1.setGeometry(440, 300, 230, 60)
+        combox_1.addItems(
+            ["PM1", "PM2.5", "PM10", "Temperatura", "Ciśnienie", "Wilgotność"]
+        )
+
+        # user_choice_plot_var = int(list_widget_1.currentIndex())
+        plot = DataView(combox_1.currentIndex())
+        button_2 = QPushButton("Wyświetl przykładowe\ndane pomiarowe dla:", self)
+        button_2.clicked.connect(
+            lambda: print(combox_1.currentIndex())
+            or (plot.plot_data_from_csv(combox_1.currentIndex() + 2)),
+        )
         button_2.setGeometry(440, 200, 230, 100)
 
 
