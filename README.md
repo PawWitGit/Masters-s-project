@@ -8,7 +8,7 @@ The project will help me develop python(AI/ML, data sciencie) skills.
 
 
 # First air pollution analysis
-I read data from my home sensor and anlysis with matplotlib
+I read data from my home sensor and anlysed using matplotlib and pandas
 !![data](https://user-images.githubusercontent.com/81580465/166743291-9b45169e-8867-40af-97c4-d0ae180bc7cf.png)
 
 
