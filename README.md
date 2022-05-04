@@ -14,7 +14,7 @@ I read data from my home sensor and anlysed using matplotlib and pandas
 
 
 # Preliminary GUI version
-![image](https://user-images.githubusercontent.com/81580465/154765455-f1a7b8e7-1995-471f-8857-fe852b5ec3da.png)
+[image](https://user-images.githubusercontent.com/81580465/154765455-f1a7b8e7-1995-471f-8857-fe852b5ec3da.png)
 
 # Plot Data
 ![image](https://user-images.githubusercontent.com/81580465/154765497-f8755370-e31c-4893-af38-3e770ca9af3d.png)
