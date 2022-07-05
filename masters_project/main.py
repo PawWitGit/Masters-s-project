@@ -2,6 +2,7 @@ from calendar import Calendar
 import tkinter as tk
 from tkinter import CENTER, NW, RAISED, RIDGE, Button, Canvas, Label, ttk
 from tkinter.messagebox import showinfo
+
 import main_plot
 from main_plot import PlotData
 
@@ -30,17 +31,11 @@ class Gui(tk.Tk):
         )
         self.info_label.grid(column=1, row=0)
 
-        self.sep_line_1 = ttk.Separator(orient="vertical").grid(
-            column=1, row=1, sticky="ns", rowspan=3
-        )
+        self.sep_line_1 = ttk.Separator(orient="vertical").grid(column=1, row=1, sticky="ns", rowspan=3)
 
-        self.sep_line_2 = ttk.Separator(orient="horizontal").grid(
-            column=2, row=2, sticky="ns", rowspan=4
-        )
+        self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", rowspan=4)
 
-        self.start_date_label = Label(
-            text="Poniżej wybierz\ndatę początkową", font="12"
-        )
+        self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="12")
         self.start_date_label.grid(column=0, row=1)
 
         self.end_date_label = Label(text="Poniżej wybierz\ndatę końcową", font="12")
@@ -65,8 +60,8 @@ class Gui(tk.Tk):
             selectmode="day",
             locale="en_US",
             cursor="hand1",
-            year=2021,
-            month=11,
+            year=2022,
+            month=3,
             day=1,
         )
         self.end_date.grid(column=2, row=2)
@@ -79,8 +74,14 @@ class Gui(tk.Tk):
             height=3,
             width=13,
             relief=style.btn_rlf_style(),
-            command=lambda: plot.get_start_date(self.start_date.get_date()),
+            command=lambda: [
+                print(""),
+                plot.get_start_date(self.start_date.get_date()),
+                plot.get_end_date(self.end_date.get_date()),
+                plot.plot_chart(self.start_date.get_date(), self.end_date.get_date()),
+            ],
         )
+
         self.plot_button.grid(column=1, row=2)
 
 
