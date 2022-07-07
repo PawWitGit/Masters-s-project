@@ -1,7 +1,10 @@
 from calendar import Calendar
 import tkinter as tk
-from tkinter import CENTER, NW, RAISED, RIDGE, Button, Canvas, Label, ttk
+from tkinter import CENTER, NW, RAISED, RIDGE, Button, Canvas, Entry, Label, Toplevel, ttk
+from turtle import width
+from tktimepicker import AnalogPicker, AnalogThemes, constants, SpinTimePickerModern, SpinTimePickerOld
 from tkinter.messagebox import showinfo
+import datetime as dt
 
 import main_plot
 from main_plot import PlotData
@@ -18,11 +21,12 @@ class Gui(tk.Tk):
 
         style = SetStyle()
         plot = PlotData()
-        self.title("My app")
+        self.title("AIR POLL PLOTTER")
         self.config(height=500, width=550)
 
         self.can = Canvas(height=400, width=800)
-        self.can.grid(columnspan=3, rowspan=4)
+        self.can.grid(columnspan=3, rowspan=5)
+        self.can.rowconfigure(5, weight=1)
 
         self.info_label = Label(
             text="Wybierz daty początku i końca filtrowania",
@@ -31,7 +35,7 @@ class Gui(tk.Tk):
         )
         self.info_label.grid(column=1, row=0)
 
-        self.sep_line_1 = ttk.Separator(orient="vertical").grid(column=1, row=1, sticky="ns", rowspan=3)
+        self.sep_line_1 = ttk.Separator(orient="vertical").grid(column=1, row=1, sticky="ns", rowspan=4)
 
         self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", rowspan=4)
 
@@ -42,6 +46,17 @@ class Gui(tk.Tk):
         self.end_date_label.grid(
             column=2,
             row=1,
+        )
+
+        self.start_hour_label = Label(text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'", font="12")
+        self.start_hour_label.grid(
+            column=0,
+            row=4,
+        )
+        self.end_hour_label = Label(text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00", font="12")
+        self.end_hour_label.grid(
+            column=2,
+            row=4,
         )
 
         self.start_date = Calendar(
@@ -66,6 +81,14 @@ class Gui(tk.Tk):
         )
         self.end_date.grid(column=2, row=2)
 
+        self.start_time_input_hour = Entry()
+        self.start_time_input_hour.insert("222", dt.datetime.now().strftime("%H:%M:%M"))
+        self.start_time_input_hour.grid(column=0, row=5)
+
+        self.end_time_input_hour = Entry()
+        self.end_time_input_hour.insert("222", dt.datetime.now().strftime("%H:%M:%M"))
+        self.end_time_input_hour.grid(column=2, row=5)
+
         self.plot_button = tk.Button(
             text="Pokaż wykres",
             font=style.font_style(),
@@ -76,9 +99,12 @@ class Gui(tk.Tk):
             relief=style.btn_rlf_style(),
             command=lambda: [
                 print(""),
-                plot.get_start_date(self.start_date.get_date()),
-                plot.get_end_date(self.end_date.get_date()),
-                plot.plot_chart(self.start_date.get_date(), self.end_date.get_date()),
+                plot.get_date(
+                    self.start_date.get_date(),
+                    self.end_date.get_date(),
+                    self.start_time_input_hour.get(),
+                    self.end_time_input_hour.get(),
+                ),
             ],
         )
 

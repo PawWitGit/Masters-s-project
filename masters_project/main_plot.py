@@ -1,10 +1,13 @@
-from datetime import datetime
+from datetime import date, datetime
 from multiprocessing import get_start_method
 from sys import displayhook
+from numpy import full
 import pandas as pd
 import matplotlib as plt
 import os
 import glob
+import datetime as dt
+from tkinter import messagebox
 
 
 class PlotData:
@@ -12,38 +15,35 @@ class PlotData:
         pass
 
     @staticmethod
-    def get_start_date(start_date):
+    def get_date(start_date, end_date, start_time, end_time):
 
-        try:
-            start_date = datetime.strptime(start_date, "%d/%m/%y")
-        except ValueError:
-            start_date = datetime.strptime(start_date, "%m/%d/%y")
+        times = ["{} {}".format(start_date, start_time), "{} {}".format(end_date, end_time)]
+        print(times)
+        format_times = []
 
-        print("Start date: {}".format(start_date))
-        print(type(start_date))
+        for index in range(len(times)):
+            print("temp: ".format(times[index]))
+            try:
+                format_times.append(datetime.strptime(times[index], "%d/%m/%y %H:%M:%S"))
+                print(format_times[index])
+            except ValueError:
+                format_times.append(datetime.strptime(times[index], "%m/%d/%y %H:%M:%S"))
+                print(format_times[index])
 
-        return start_date
+        print("start time: {}\t\nend time: {}".format((format_times[0]), (format_times[1])))
+        print("start time: {}\t\nend time: {}".format(type(format_times[0]), type([format_times[1]])))
 
-    @staticmethod
-    def get_end_date(end_date):
+        # time = datetime.time(time)
+        # full_time = datetime.combine(start_date, time)
+        # print(full_time)
 
-        try:
-            end_date = datetime.strptime(end_date, "%d/%m/%y")
-        except ValueError:
-            end_date = datetime.strptime(end_date, "%m/%d/%y")
-
-        print("End date: {}".format(end_date))
-        print(type(end_date))
-
-        return end_date
+        return times[0], times[1]
 
     @staticmethod
     def plot_chart(start_date, end_date):
 
-        df = pd.read_csv("home/pi/air_poll_venv/app/air_pulltion_smog.csv")
-        print(df.head())
-        # air_poll_df = open(r"air_pollution_smog.csv")
-        # # pd.read_csv("air_pollution_smog.csv")
+        air_poll_df = pd.read_csv("/home/pi/air_poll_venv/app/air_pollution_smog.csv", sep=",")
+        print(air_poll_df.head())
 
         # start_date = pd.to_datetime(start_date)
         # end_date = pd.to_datetime(end_date)
