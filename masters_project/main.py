@@ -34,11 +34,13 @@ class Gui(tk.Tk):
             font=(style.font_style(), 13),
             borderwidth=1,
         )
+
+        self.grid_propagate(True)
         self.info_label.grid(column=1, row=0)
 
-        self.sep_line_1 = ttk.Separator(orient="vertical").grid(column=1, row=1, sticky="ns", rowspan=4)
+        self.sep_line_1 = ttk.Separator(orient="vertical").grid(column=1, row=1, sticky="ns", rowspan=11)
 
-        self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", rowspan=4)
+        self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", columnspan=3)
 
         self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="12")
         self.start_date_label.grid(column=0, row=1)
@@ -59,6 +61,11 @@ class Gui(tk.Tk):
             column=2,
             row=4,
         )
+        self.air_poll_label = Label(text="Wybierz zanieczyszczenia, które chcesz wyświetlić")
+        self.air_poll_label.grid(column=0, row=7)
+
+        self.air_poll_label = Label(text="Wybierz wartości, które chcesz wyświetlić")
+        self.air_poll_label.grid(column=2, row=7)
 
         self.start_date = Calendar(
             font="Raleway 12",
@@ -96,19 +103,38 @@ class Gui(tk.Tk):
         for i in range(6):
             check_vars.append(tk.IntVar())
 
-        self.check_box_PM1 = tk.Checkbutton(text="PM1", variable=check_vars[0], onvalue=1, offvalue=0, anchor="w")
-        self.check_box_PM10 = tk.Checkbutton(text="PM2.5", variable=check_vars[1], onvalue=1, offvalue=0)
-        self.check_box_PM2_5 = tk.Checkbutton(text="PM10", variable=check_vars[2], onvalue=1, offvalue=0)
-        self.check_box_temp = tk.Checkbutton(text="Temperatura", variable=check_vars[3], onvalue=1, offvalue=0)
-        self.check_box_pressure = tk.Checkbutton(text="Ciśnienie", variable=check_vars[4], onvalue=1, offvalue=0)
+        self.check_box_PM1 = tk.Checkbutton(
+            text="PM1",
+            variable=check_vars[0],
+            onvalue=1,
+            offvalue=0,
+        )
+        self.check_box_PM2_5 = tk.Checkbutton(
+            text="PM2.5",
+            variable=check_vars[1],
+            onvalue=1,
+            offvalue=0,
+        )
+        self.check_box_PM10 = tk.Checkbutton(
+            text="PM10",
+            variable=check_vars[2],
+            onvalue=1,
+            offvalue=0,
+        )
+        self.check_box_temp = tk.Checkbutton(
+            text="Temperatura", variable=check_vars[3], onvalue=1, offvalue=0, anchor="w"
+        )
+        self.check_box_pressure = tk.Checkbutton(
+            text="Ciśnienie", variable=check_vars[4], onvalue=1, offvalue=0, anchor="w"
+        )
         self.check_box_humidity = tk.Checkbutton(text="Wilgotność", variable=check_vars[5], onvalue=1, offvalue=0)
 
-        self.check_box_PM1.grid(column=0, row=6)
-        self.check_box_PM10.grid(column=1, row=6)
-        self.check_box_PM2_5.grid(column=2, row=6)
-        self.check_box_temp.grid(column=0, row=7)
-        self.check_box_pressure.grid(column=1, row=7)
-        self.check_box_humidity.grid(column=2, row=7)
+        self.check_box_PM1.grid(column=1, row=6, sticky="W")
+        self.check_box_PM2_5.grid(column=1, row=7, sticky="W")
+        self.check_box_PM10.grid(column=1, row=8, sticky="W")
+        self.check_box_temp.grid(column=1, row=6, sticky="E")
+        self.check_box_pressure.grid(column=1, row=7, sticky="E")
+        self.check_box_humidity.grid(column=1, row=8, sticky="E")
 
         self.plot_button = tk.Button(
             text="Pokaż wykres",

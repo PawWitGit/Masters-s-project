@@ -42,7 +42,17 @@ class PlotData:
 
         plot = PlotData()
 
-        print(plot.selected_values(selected_vars[1]))
+        filter_values = ["PM1", "PM2.5", "PM10", "temp", "pressure", "humidity"]
+
+        bool_values = dict(zip(filter_values, plot.selected_values(selected_vars)))
+
+        filtered_values = []
+
+        print(bool_values)
+
+        for key, val in bool_values.items():
+            if val == 1:
+                filtered_values.append(key)
 
         try:
             full_time = plot.format_date(selected_start_date, selected_start_time, selected_end_date, selected_end_time)
@@ -68,14 +78,17 @@ class PlotData:
         plot_df = (air_poll_df["date"] >= start_date) & (air_poll_df["date"] <= end_date)
         plot_df_2 = air_poll_df.loc[plot_df]
 
-        plot_df_2.plot(x="date", y=["PM1", "PM2.5", "PM10"])
+        try:
+            plot_df_2.plot(x="date", y=filtered_values)
 
-        plt.suptitle(
-            "Wartości mierzone przez miernik w okresie\n{} Do {} ".format(start_date, end_date).upper(),
-            fontsize=12,
-            color="black",
-        )
+            plt.suptitle(
+                "Wartości mierzone przez miernik w okresie\n{} Do {} ".format(start_date, end_date).upper(),
+                fontsize=12,
+                color="black",
+            )
 
-        plt.xlabel("Date -->", fontsize=14, color="black")
-        plt.ylabel("Values -->", fontsize=14, color="black")
-        plt.show()
+            plt.xlabel("Data", fontsize=12, color="black")
+            plt.ylabel("Wartości", fontsize=12, color="black")
+            plt.show()
+        except TypeError:
+            messagebox.showinfo("Błąd danych", "Nie zaznaczyłeś żadnych danych do wyświetlenia")
