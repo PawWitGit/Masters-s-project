@@ -1,60 +1,81 @@
 from datetime import date, datetime
 from multiprocessing import get_start_method
 from sys import displayhook
+from tkinter import messagebox
+from tracemalloc import start
 from numpy import full
 import pandas as pd
 import matplotlib as plt
+import matplotlib.pyplot as plt
 import os
 import glob
 import datetime as dt
-from tkinter import messagebox
 
 
 class PlotData:
     def __init__(self) -> None:
         pass
 
-    @staticmethod
-    def get_date(start_date, end_date, start_time, end_time):
+    def format_date(self, selected_start_date, selected_start_time, selected_end_date, selected_end_time) -> list:
 
-        times = ["{} {}".format(start_date, start_time), "{} {}".format(end_date, end_time)]
-        print(times)
-        format_times = []
+        start_date = "{} {}".format(selected_start_date, selected_start_time)
+        end_date = "{} {}".format(selected_end_date, selected_end_time)
 
-        for index in range(len(times)):
-            print("temp: ".format(times[index]))
+        times = [start_date, end_date]
+        format_dates = []
+
+        for i, val in enumerate(times):
             try:
-                format_times.append(datetime.strptime(times[index], "%d/%m/%y %H:%M:%S"))
-                print(format_times[index])
+                format_dates.append(datetime.strptime(times[i], "%d/%m/%y %H:%M:%S"))
+
             except ValueError:
-                format_times.append(datetime.strptime(times[index], "%m/%d/%y %H:%M:%S"))
-                print(format_times[index])
 
-        print("start time: {}\t\nend time: {}".format((format_times[0]), (format_times[1])))
-        print("start time: {}\t\nend time: {}".format(type(format_times[0]), type([format_times[1]])))
+                format_dates.append(datetime.strptime(times[i], "%m/%d/%y %H:%M:%S"))
 
-        # time = datetime.time(time)
-        # full_time = datetime.combine(start_date, time)
-        # print(full_time)
+        return format_dates
 
-        return times[0], times[1]
+    def selected_values(self, selected_values):
+        return selected_values
 
     @staticmethod
-    def plot_chart(start_date, end_date):
+    def plot_chart(selected_start_date, selected_start_time, selected_end_date, selected_end_time, selected_vars):
 
-        air_poll_df = pd.read_csv("/home/pi/air_poll_venv/app/air_pollution_smog.csv", sep=",")
-        print(air_poll_df.head())
+        plot = PlotData()
 
-        # start_date = pd.to_datetime(start_date)
-        # end_date = pd.to_datetime(end_date)
+        print(plot.selected_values(selected_vars[1]))
 
-        # print(start_date, end_date)
-        # air_poll_df["date"] = pd.to_datetime(air_poll_df["date"])
-        # new_df = (air_poll_df["date"] >= start_date) & (air_poll_df["date"] <= end_date)
-        # df2 = air_poll_df.loc[new_df]
-        # plt.figure(figsize=(10, 10))
-        # df2.plot(x="date", y=["PM1", "PM2.5"])
-        # plt.suptitle("air_poll_read".upper(), fontsize=12, color="black")
-        # plt.xlabel("Date -->", fontsize=14, color="green")
-        # plt.ylabel("values", fontsize=14, color="red")
-        # plt.show()
+        try:
+            full_time = plot.format_date(selected_start_date, selected_start_time, selected_end_date, selected_end_time)
+        except ValueError:
+            messagebox.showwarning(
+                "Błąd formatu godziny",
+                "Wprowadź godzinę rozpoczęcia i zakończenia filtrowania w poprawnym formacie",
+            )
+
+        air_poll_df = pd.read_csv("/home/pi/air_poll_venv/app/air_pollution_smog_1.csv", sep=",")
+
+        for idx, val in enumerate(full_time):
+            pd.to_datetime(full_time[idx])
+
+        start_date = full_time[0]
+        end_date = full_time[1]
+
+        print("Formatted dates: ")
+        print("Start date: {}, type {}".format(start_date, type(start_date)))
+        print("End date: {}, type: {}".format(end_date, type(end_date)))
+
+        air_poll_df["date"] = pd.to_datetime(air_poll_df["date"])
+        plot_df = (air_poll_df["date"] >= start_date) & (air_poll_df["date"] <= end_date)
+        plot_df_2 = air_poll_df.loc[plot_df]
+
+        plot_df_2.plot(x="date", y=["PM1", "PM2.5", "PM10"])
+
+        plt.suptitle(
+            "Wartości mierzone przez miernik w okresie\n{} Do {} ".format(start_date, end_date).upper(),
+            fontsize=12,
+            color="black",
+        )
+
+        plt.xlabel("Date -->", fontsize=14, color="black")
+        plt.ylabel("Values -->", fontsize=14, color="black")
+        plt.show()

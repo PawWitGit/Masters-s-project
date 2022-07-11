@@ -1,7 +1,8 @@
 from calendar import Calendar
 import tkinter as tk
-from tkinter import CENTER, NW, RAISED, RIDGE, Button, Canvas, Entry, Label, Toplevel, ttk
+from tkinter import CENTER, NW, RAISED, RIDGE, Button, Canvas, Entry, Label, Toplevel, ttk, messagebox
 from turtle import width
+from typing_extensions import IntVar
 from tktimepicker import AnalogPicker, AnalogThemes, constants, SpinTimePickerModern, SpinTimePickerOld
 from tkinter.messagebox import showinfo
 import datetime as dt
@@ -21,12 +22,12 @@ class Gui(tk.Tk):
 
         style = SetStyle()
         plot = PlotData()
-        self.title("AIR POLL PLOTTER")
+        self.title("Zanieczyszczenia powietrza")
         self.config(height=500, width=550)
 
         self.can = Canvas(height=400, width=800)
-        self.can.grid(columnspan=3, rowspan=5)
-        self.can.rowconfigure(5, weight=1)
+        self.can.grid(columnspan=3, rowspan=7)
+        self.can.rowconfigure(7, weight=1)
 
         self.info_label = Label(
             text="Wybierz daty początku i końca filtrowania",
@@ -89,6 +90,26 @@ class Gui(tk.Tk):
         self.end_time_input_hour.insert("222", dt.datetime.now().strftime("%H:%M:%M"))
         self.end_time_input_hour.grid(column=2, row=5)
 
+        self.checkboxes = ["PM1", "PM2.5", "PM10", "temp", "pressure", "humidity"]
+
+        check_vars = []
+        for i in range(6):
+            check_vars.append(tk.IntVar())
+
+        self.check_box_PM1 = tk.Checkbutton(text="PM1", variable=check_vars[0], onvalue=1, offvalue=0, anchor="w")
+        self.check_box_PM10 = tk.Checkbutton(text="PM2.5", variable=check_vars[1], onvalue=1, offvalue=0)
+        self.check_box_PM2_5 = tk.Checkbutton(text="PM10", variable=check_vars[2], onvalue=1, offvalue=0)
+        self.check_box_temp = tk.Checkbutton(text="Temperatura", variable=check_vars[3], onvalue=1, offvalue=0)
+        self.check_box_pressure = tk.Checkbutton(text="Ciśnienie", variable=check_vars[4], onvalue=1, offvalue=0)
+        self.check_box_humidity = tk.Checkbutton(text="Wilgotność", variable=check_vars[5], onvalue=1, offvalue=0)
+
+        self.check_box_PM1.grid(column=0, row=6)
+        self.check_box_PM10.grid(column=1, row=6)
+        self.check_box_PM2_5.grid(column=2, row=6)
+        self.check_box_temp.grid(column=0, row=7)
+        self.check_box_pressure.grid(column=1, row=7)
+        self.check_box_humidity.grid(column=2, row=7)
+
         self.plot_button = tk.Button(
             text="Pokaż wykres",
             font=style.font_style(),
@@ -99,16 +120,25 @@ class Gui(tk.Tk):
             relief=style.btn_rlf_style(),
             command=lambda: [
                 print(""),
-                plot.get_date(
+                plot.plot_chart(
                     self.start_date.get_date(),
-                    self.end_date.get_date(),
                     self.start_time_input_hour.get(),
+                    self.end_date.get_date(),
                     self.end_time_input_hour.get(),
+                    read_check_vars(check_vars),
                 ),
             ],
         )
 
         self.plot_button.grid(column=1, row=2)
+
+        def read_check_vars(check_vars):
+
+            selected_values = []
+            for i, val in enumerate(check_vars):
+                selected_values.append(check_vars[i].get())
+
+            return selected_values
 
 
 class SetStyle:
