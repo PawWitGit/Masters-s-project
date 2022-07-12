@@ -9,6 +9,7 @@ import datetime as dt
 
 import main_plot
 from main_plot import PlotData
+import logging
 
 # from matplotlib.ft2font import HORIZONTAL
 from tkcalendar import *
@@ -21,6 +22,7 @@ class Gui(tk.Tk):
         super().__init__()
 
         style = SetStyle()
+        
         plot = PlotData()
         self.title("Zanieczyszczenia powietrza")
         self.config(height=500, width=550)
@@ -42,21 +44,21 @@ class Gui(tk.Tk):
 
         self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", columnspan=3)
 
-        self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="12")
+        self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="8")
         self.start_date_label.grid(column=0, row=1)
 
-        self.end_date_label = Label(text="Poniżej wybierz\ndatę końcową", font="12")
+        self.end_date_label = Label(text="Poniżej wybierz\ndatę końcową", font="8")
         self.end_date_label.grid(
             column=2,
             row=1,
         )
 
-        self.start_hour_label = Label(text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'", font="12")
+        self.start_hour_label = Label(text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'", font="9")
         self.start_hour_label.grid(
             column=0,
             row=4,
         )
-        self.end_hour_label = Label(text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00", font="12")
+        self.end_hour_label = Label(text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00", font="9")
         self.end_hour_label.grid(
             column=2,
             row=4,
