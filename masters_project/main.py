@@ -5,6 +5,12 @@ import datetime as dt
 
 import main_plot
 from main_plot import PlotData
+<<<<<<< HEAD
+=======
+import logging
+
+# from matplotlib.ft2font import HORIZONTAL
+>>>>>>> 00031daeddb355384a9281ae7179d599e2c17355
 from tkcalendar import *
 
 
@@ -13,7 +19,11 @@ class Gui(tk.Tk):
         super().__init__()
 
         style = SetStyle()
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 00031daeddb355384a9281ae7179d599e2c17355
         plot = PlotData()
         self.title("Zanieczyszczenia powietrza")
         self.config(height=500, width=550)
