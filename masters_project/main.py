@@ -1,19 +1,11 @@
 from calendar import Calendar
 import tkinter as tk
-from tkinter import CENTER, NW, RAISED, RIDGE, Button, Canvas, Entry, Label, Toplevel, ttk, messagebox
-from turtle import width
-from typing_extensions import IntVar
-from tktimepicker import AnalogPicker, AnalogThemes, constants, SpinTimePickerModern, SpinTimePickerOld
-from tkinter.messagebox import showinfo
+from tkinter import RAISED, Canvas, Entry, Label, ttk
 import datetime as dt
 
 import main_plot
 from main_plot import PlotData
-
-# from matplotlib.ft2font import HORIZONTAL
 from tkcalendar import *
-
-from click import command, style
 
 
 class Gui(tk.Tk):
@@ -21,6 +13,7 @@ class Gui(tk.Tk):
         super().__init__()
 
         style = SetStyle()
+
         plot = PlotData()
         self.title("Zanieczyszczenia powietrza")
         self.config(height=500, width=550)
@@ -42,21 +35,21 @@ class Gui(tk.Tk):
 
         self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", columnspan=3)
 
-        self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="12")
+        self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="8")
         self.start_date_label.grid(column=0, row=1)
 
-        self.end_date_label = Label(text="Poniżej wybierz\ndatę końcową", font="12")
+        self.end_date_label = Label(text="Poniżej wybierz\ndatę końcową", font="8")
         self.end_date_label.grid(
             column=2,
             row=1,
         )
 
-        self.start_hour_label = Label(text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'", font="12")
+        self.start_hour_label = Label(text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'", font="9")
         self.start_hour_label.grid(
             column=0,
             row=4,
         )
-        self.end_hour_label = Label(text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00", font="12")
+        self.end_hour_label = Label(text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00", font="9")
         self.end_hour_label.grid(
             column=2,
             row=4,
@@ -99,9 +92,7 @@ class Gui(tk.Tk):
 
         self.checkboxes = ["PM1", "PM2.5", "PM10", "temp", "pressure", "humidity"]
 
-        check_vars = []
-        for i in range(6):
-            check_vars.append(tk.IntVar())
+        check_vars = [tk.IntVar() for i in self.checkboxes]
 
         self.check_box_PM1 = tk.Checkbutton(
             text="PM1",
@@ -145,7 +136,6 @@ class Gui(tk.Tk):
             width=13,
             relief=style.btn_rlf_style(),
             command=lambda: [
-                print(""),
                 plot.plot_chart(
                     self.start_date.get_date(),
                     self.start_time_input_hour.get(),
@@ -159,12 +149,7 @@ class Gui(tk.Tk):
         self.plot_button.grid(column=1, row=2)
 
         def read_check_vars(check_vars):
-
-            selected_values = []
-            for i, val in enumerate(check_vars):
-                selected_values.append(check_vars[i].get())
-
-            return selected_values
+            return [i.get() for i in check_vars]
 
 
 class SetStyle:
