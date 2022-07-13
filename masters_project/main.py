@@ -2,18 +2,8 @@ from calendar import Calendar
 import tkinter as tk
 from tkinter import RAISED, Canvas, Entry, Label, ttk
 import datetime as dt
-
 import main_plot
 from main_plot import PlotData
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-import logging
-
-# from matplotlib.ft2font import HORIZONTAL
->>>>>>> 00031daeddb355384a9281ae7179d599e2c17355
->>>>>>> 735a11d5349cc8e4d2f1c4b1f64dcc244844f6ad
 from tkcalendar import *
 
 
@@ -22,15 +12,7 @@ class Gui(tk.Tk):
         super().__init__()
 
         style = SetStyle()
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 00031daeddb355384a9281ae7179d599e2c17355
->>>>>>> 735a11d5349cc8e4d2f1c4b1f64dcc244844f6ad
         plot = PlotData()
         self.title("Zanieczyszczenia powietrza")
         self.config(height=500, width=550)
@@ -48,9 +30,13 @@ class Gui(tk.Tk):
         self.grid_propagate(True)
         self.info_label.grid(column=1, row=0)
 
-        self.sep_line_1 = ttk.Separator(orient="vertical").grid(column=1, row=1, sticky="ns", rowspan=11)
+        self.sep_line_1 = ttk.Separator(orient="vertical").grid(
+            column=1, row=1, sticky="ns", rowspan=11
+        )
 
-        self.sep_line_2 = ttk.Separator(orient="horizontal").grid(column=2, row=2, sticky="ns", columnspan=3)
+        self.sep_line_2 = ttk.Separator(orient="horizontal").grid(
+            column=2, row=2, sticky="ns", columnspan=3
+        )
 
         self.start_date_label = Label(text="Poniżej wybierz\ndatę początkową", font="8")
         self.start_date_label.grid(column=0, row=1)
@@ -61,17 +47,25 @@ class Gui(tk.Tk):
             row=1,
         )
 
-        self.start_hour_label = Label(text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'", font="9")
+        self.start_hour_label = Label(
+            text="Poniżej wprowdź\ngodzinę rozpoczęcia\n w formacie '00:00:00'",
+            font="9",
+        )
         self.start_hour_label.grid(
             column=0,
             row=4,
         )
-        self.end_hour_label = Label(text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00", font="9")
+        self.end_hour_label = Label(
+            text="Poniżej wprowadź\ngodzinę zakończenia\n w formacie '00:00:00",
+            font="9",
+        )
         self.end_hour_label.grid(
             column=2,
             row=4,
         )
-        self.air_poll_label = Label(text="Wybierz zanieczyszczenia, które chcesz wyświetlić")
+        self.air_poll_label = Label(
+            text="Wybierz zanieczyszczenia, które chcesz wyświetlić"
+        )
         self.air_poll_label.grid(column=0, row=7)
 
         self.air_poll_label = Label(text="Wybierz wartości, które chcesz wyświetlić")
@@ -130,12 +124,18 @@ class Gui(tk.Tk):
             offvalue=0,
         )
         self.check_box_temp = tk.Checkbutton(
-            text="Temperatura", variable=check_vars[3], onvalue=1, offvalue=0, anchor="w"
+            text="Temperatura",
+            variable=check_vars[3],
+            onvalue=1,
+            offvalue=0,
+            anchor="w",
         )
         self.check_box_pressure = tk.Checkbutton(
             text="Ciśnienie", variable=check_vars[4], onvalue=1, offvalue=0, anchor="w"
         )
-        self.check_box_humidity = tk.Checkbutton(text="Wilgotność", variable=check_vars[5], onvalue=1, offvalue=0)
+        self.check_box_humidity = tk.Checkbutton(
+            text="Wilgotność", variable=check_vars[5], onvalue=1, offvalue=0
+        )
 
         self.check_box_PM1.grid(column=1, row=6, sticky="W")
         self.check_box_PM2_5.grid(column=1, row=7, sticky="W")
