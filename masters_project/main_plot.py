@@ -84,7 +84,7 @@ class PlotData:
             plot.logging_err("hour_data_err")
 
         air_poll_df = pd.read_csv(
-            "/home/pi/air_poll_venv/app/air_pollution_smog_1.csv", sep=","
+            "C:/Users/admin/Masters-s-project/masters_project/air_pollution_smog_1.csv", sep=","
         )
 
         try:
