@@ -32,7 +32,7 @@ class PlotData:
 
         return format_dates
 
-    def logging_err(self, type_err):
+    def logging_err(self, type_err: str):
 
         if type_err == "data_plot_err":
             return logger.warn(
@@ -43,7 +43,7 @@ class PlotData:
                 logging.warning("{} Wrong format".format(datetime.now()))
             )
 
-    def selected_values(self, selected_values):
+    def selected_values(self, selected_values: list) -> list:
         return selected_values
 
     @staticmethod
@@ -84,7 +84,8 @@ class PlotData:
             plot.logging_err("hour_data_err")
 
         air_poll_df = pd.read_csv(
-            "C:/Users/admin/Masters-s-project/masters_project/air_pollution_smog_1.csv", sep=","
+            "C:/Users/admin/Masters-s-project/masters_project/air_pollution_smog_1.csv",
+            sep=",",
         )
 
         try:
