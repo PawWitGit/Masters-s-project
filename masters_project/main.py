@@ -153,11 +153,13 @@ class Gui(tk.Tk):
             width=13,
             relief=style.btn_rlf_style(),
             command=lambda: [
-                print(self.start_date.get_date(),
+                print(
+                    self.start_date.get_date(),
                     self.start_time_input_hour.get(),
                     self.end_date.get_date(),
                     self.end_time_input_hour.get(),
-                    read_check_vars(check_vars),),
+                    read_check_vars(check_vars),
+                ),
                 plot.plot_chart(
                     self.start_date.get_date(),
                     self.start_time_input_hour.get(),

@@ -1,0 +1,9 @@
+soruce: https://www.w3schools.com/python/pandas/ref_df_describe.asp
+count - The number of not-empty values.
+mean - The average (mean) value.
+std - The standard deviation.
+min - the minimum value.
+25% - The 25% percentile*.
+50% - The 50% percentile*.
+75% - The 75% percentile*.
+max - the maximum value.
