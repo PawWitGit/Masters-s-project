@@ -89,48 +89,59 @@ class PlotData:
         )
 
 
-        Q1 = air_poll_df[filter_values].quantile(0.25)
-        Q3 = air_poll_df[filter_values].quantile(0.75)
-        IQR = Q3 - Q1
+        filter_1 = air_poll_df[filter_values].quantile(0.25)
+        filter_2= air_poll_df[filter_values].quantile(0.75)
+        _filter = filter_2 - filter_1
 
-        air_poll_df = air_poll_df[~((air_poll_df[filter_values] < (Q1 - 1.5 * IQR)) |(air_poll_df[filter_values] > (Q3 + 1.5 * IQR))).any(axis=1)]
+        air_poll_df = air_poll_df[~((air_poll_df[filter_values] < (filter_1 - 1.5 * _filter)) |(air_poll_df[filter_values] > (filter_2 + 1.5 * _filter))).any(axis=1)]
 
-        try:
-
-            [pd.to_datetime(i) for i in full_time]
-
-            start_date = full_time[0]
-            end_date = full_time[1]
-
-            air_poll_df["date"] = pd.to_datetime(air_poll_df["date"])
-            plot_df = (air_poll_df["date"] >= start_date) & (
-                air_poll_df["date"] <= end_date
-            )
-            plot_df_2 = air_poll_df.loc[plot_df]
-
-            plt.rcParams["figure.figsize"] = [16.0, 6.0]
-            plt.rcParams["figure.autolayout"] = True
-
+        while True:
             try:
 
-                plot_df_2.plot(x="date", y=filtered_values)
+                [pd.to_datetime(i) for i in full_time]
 
-                plt.suptitle(
-                    "Wartości mierzone przez miernik w okresie\n{} Do {} ".format(
-                        start_date, end_date
-                    ).upper(),
-                    fontsize=12,
-                    color="black",
+                start_date = full_time[0]
+                end_date = full_time[1]
+
+
+                if start_date > end_date:
+                    messagebox.showinfo("Błąd zakresu data", "Podałeś datę startową późniejszą od daty końcowej")
+                    break
+                    
+
+                air_poll_df["date"] = pd.to_datetime(air_poll_df["date"])
+                plot_df = (air_poll_df["date"] >= start_date) & (
+                    air_poll_df["date"] <= end_date
                 )
+                plot_df_2 = air_poll_df.loc[plot_df]
 
-                plt.xlabel("Data", fontsize=12, color="black")
-                plt.ylabel("Wartości", fontsize=12, color="black")
-                plt.show()
-            except TypeError:
-                messagebox.showinfo(
-                    "Błąd danych", "Nie zaznaczyłeś żadnych danych do wyświetlenia"
-                ),
-                plot.logging_err("data_plot_err")
+                plt.rcParams["figure.figsize"] = [16.0, 6.0]
+                plt.rcParams["figure.autolayout"] = True
 
-        except UnboundLocalError:
-            pass
+                try:
+
+                    plot_df_2.plot(x="date", y=filtered_values)
+
+                    plt.suptitle(
+                        "Wartości mierzone przez miernik w okresie\n{} Do {} ".format(
+                            start_date, end_date
+                        ).upper(),
+                        fontsize=12,
+                        color="black",
+                    )
+
+                    plt.xlabel("Data", fontsize=12, color="black")
+                    plt.ylabel("Wartości", fontsize=12, color="black")
+                    plt.show()
+                    break
+
+                except TypeError:
+                    messagebox.showinfo(
+                        "Błąd danych", "Nie zaznaczyłeś żadnych danych do wyświetlenia"
+                    ),
+                    plot.logging_err("data_plot_err")
+                    break
+                    
+            except UnboundLocalError:
+                pass
+            break
