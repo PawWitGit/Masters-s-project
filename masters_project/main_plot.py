@@ -88,6 +88,13 @@ class PlotData:
             sep=",",
         )
 
+
+        Q1 = air_poll_df[filter_values].quantile(0.25)
+        Q3 = air_poll_df[filter_values].quantile(0.75)
+        IQR = Q3 - Q1
+
+        air_poll_df = air_poll_df[~((air_poll_df[filter_values] < (Q1 - 1.5 * IQR)) |(air_poll_df[filter_values] > (Q3 + 1.5 * IQR))).any(axis=1)]
+
         try:
 
             [pd.to_datetime(i) for i in full_time]
