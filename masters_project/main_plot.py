@@ -87,15 +87,19 @@ class PlotData:
             "C:/Users/admin/Masters-s-project/masters_project/air_pollution_smog_1.csv",
             sep=",",
         )
-        
 
         filter_1 = air_poll_df[filter_values].quantile(0.25)
-        filter_2= air_poll_df[filter_values].quantile(0.75)
+        filter_2 = air_poll_df[filter_values].quantile(0.75)
         _filter = filter_2 - filter_1
 
-        air_poll_df = air_poll_df[~((air_poll_df[filter_values] < (filter_1 - 1.5 * _filter)) |(air_poll_df[filter_values] > (filter_2 + 1.5 * _filter))).any(axis=1)]
+        air_poll_df = air_poll_df[
+            ~(
+                (air_poll_df[filter_values] < (filter_1 - 1.5 * _filter))
+                | (air_poll_df[filter_values] > (filter_2 + 1.5 * _filter))
+            ).any(axis=1)
+        ]
 
-        air_poll_df = air_poll_df.resample('1H').mean()
+        air_poll_df = air_poll_df.resample("1H").mean()
 
         while True:
             try:
@@ -105,11 +109,12 @@ class PlotData:
                 start_date = full_time[0]
                 end_date = full_time[1]
 
-
                 if start_date > end_date:
-                    messagebox.showinfo("Błąd zakresu data", "Podałeś datę startową późniejszą od daty końcowej")
+                    messagebox.showinfo(
+                        "Błąd zakresu data",
+                        "Podałeś datę startową późniejszą od daty końcowej",
+                    )
                     break
-                    
 
                 air_poll_df["date"] = pd.to_datetime(air_poll_df["date"])
                 plot_df = (air_poll_df["date"] >= start_date) & (
@@ -143,7 +148,7 @@ class PlotData:
                     ),
                     plot.logging_err("data_plot_err")
                     break
-                    
+
             except UnboundLocalError:
                 pass
             break
