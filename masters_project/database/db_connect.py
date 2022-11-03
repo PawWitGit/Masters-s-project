@@ -14,11 +14,11 @@ class DbConnection:
 
         def __init__(self):
             # "measuring", "postgres", "192.168.55.114", "_dataadmin1", "5432"
-            self.dbname = "air_pollution"
-            self.user = "postgres"
-            self.host = "192.168.55.108"
-            self.password = "_dataadmin1"
-            self.db_port = "5432"
+            self.dbname = ""
+            self.user = ""
+            self.host = ""
+            self.password = ""
+            self.db_port = ""
             self.response = Response(
                 requests.get(
                     "https://api.thingspeak.com/channels/1569165/feeds.json?results=2"
@@ -36,7 +36,7 @@ class DbConnection:
                 0,
             )
 
-        def check_db_connect(self):
+        def check_db_connect(self) -> bool:
 
             self.response.get_response_data()
             print(self.response.time + ":")
@@ -59,7 +59,7 @@ class DbConnection:
 
                 return False
 
-        def insert_values_to_db(self):
+        def insert_values_to_db(self) -> bool:
 
             """Get values from sensor and insert it`s to DB"""
 

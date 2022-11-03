@@ -2,7 +2,7 @@
 The project is going to be objective prediction of air_pollution and research on air quality.
 The project will help me develop python(AI/ML, data sciencie) skills.
 
-# GUI version with tkinter on RPi V1 update in next month
+# GUI APP
 ![image](https://user-images.githubusercontent.com/81580465/178350084-aa95c2dc-f1c2-4554-8216-14e519c32684.png)
 
 
